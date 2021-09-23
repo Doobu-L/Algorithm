@@ -1,0 +1,31 @@
+static class Solution {
+        public static String solution(String[] participant, String[] completion) {
+            String answer = "";
+            Map<String,Integer> part_map = new HashMap<>();
+            for(String s:participant){
+                if(part_map.containsKey(s)){
+                    part_map.replace(s,part_map.get(s)+1);
+                    continue;
+                }
+                part_map.put(s,0);
+            }
+
+            for(String c:completion){
+                if(part_map.containsKey(c))part_map.replace(c,part_map.get(c)-1);
+            }
+
+            for(String a : part_map.keySet()){
+                if(part_map.get(a)!=0)answer += a;
+            }
+
+            return answer;
+        }
+    }
+    
+    public static void main (String[] args){
+
+        String [] participant = {"mislav", "stanko", "mislav", "ana"};
+        String [] completion = {"stanko", "ana", "mislav"};
+
+        Solution.solution(participant,completion);
+    }
