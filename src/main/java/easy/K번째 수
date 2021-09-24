@@ -2,7 +2,7 @@
     //
     
     
-    public static int[] solution(int[] array, int[][] commands) {
+    public int[] solution(int[] array, int[][] commands) {
         int[] answer=new int[3];
         int start,end,index;
         int k=0;
@@ -30,7 +30,7 @@
     }
 
     //Arrays 라이브러리에 copyOfRange 있음. ex > Arrays.copyOfRange(array, commands[i][0]-1, commands[i][1]);
-    public static int[] getSubArray(int[] array, int start,int end){
+    int[] getSubArray(int[] array, int start,int end){
         int[] subArray = new int[end-start];
         for(int i=start;i<end;i++){
             subArray[i-start] = array[i];
@@ -38,7 +38,7 @@
         return subArray;
     }
 
-    public static void sort(int[] subArray){
+    void sort(int[] subArray){
         for(int i=0;i<subArray.length;i++){
             for(int j=i+1;j<subArray.length;j++){
                 if(subArray[i]>subArray[j])swap(subArray,i,j);
@@ -46,8 +46,29 @@
         }
     }
 
-    public static void swap(int[] array,int i , int j){
+    void swap(int[] array,int i , int j){
         int tmp=array[i];
         array[i] = array[j];
         array[j] = tmp;
+    }
+    
+     void quikSort(int[] a, int left, int right){
+        int pl = left;
+        int pr = right;
+        int x = a[(pl+pr)/2];
+
+        do{
+            while(a[pl] < x) pl++;
+            while(a[pr] > x) pr--;
+            if(pl <= pr){
+                int temp = a[pl];
+                a[pl] = a[pr];
+                a[pr] = temp;
+                pl++;
+                pr--;
+            }
+        }while(pl <= pr);
+
+        if(left < pr) sort(a, left, pr);
+        if(right > pl) sort(a, pl, right);
     }
