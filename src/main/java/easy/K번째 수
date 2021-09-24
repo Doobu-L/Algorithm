@@ -1,0 +1,49 @@
+
+    public static int[] solution(int[] array, int[][] commands) {
+        int[] answer=new int[3];
+        int start,end,index;
+        int k=0;
+
+        for(int[] command:commands){
+            start = command[0]-1;
+            end = command[1];
+            index = command[2]-1;
+            if(start==end){
+                 answer[k] = array[start];
+                 k++;
+            }else{
+                int[] sub_array = new int[end-start];
+
+                sub_array = getSubArray(array,start,end);
+
+                sort(sub_array);
+                answer[k] = sub_array[index];
+                k++;
+            }
+
+        }
+
+        return answer;
+    }
+
+    public static int[] getSubArray(int[] array, int start,int end){
+        int[] subArray = new int[end-start];
+        for(int i=start;i<end;i++){
+            subArray[i-start] = array[i];
+        }
+        return subArray;
+    }
+
+    public static void sort(int[] subArray){
+        for(int i=0;i<subArray.length;i++){
+            for(int j=i+1;j<subArray.length;j++){
+                if(subArray[i]>subArray[j])swap(subArray,i,j);
+            }
+        }
+    }
+
+    public static void swap(int[] array,int i , int j){
+        int tmp=array[i];
+        array[i] = array[j];
+        array[j] = tmp;
+    }
