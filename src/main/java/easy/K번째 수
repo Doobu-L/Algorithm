@@ -1,4 +1,7 @@
 
+    //
+    
+    
     public static int[] solution(int[] array, int[][] commands) {
         int[] answer=new int[3];
         int start,end,index;
@@ -26,6 +29,7 @@
         return answer;
     }
 
+    //Arrays 라이브러리에 copyOfRange 있음. ex > Arrays.copyOfRange(array, commands[i][0]-1, commands[i][1]);
     public static int[] getSubArray(int[] array, int start,int end){
         int[] subArray = new int[end-start];
         for(int i=start;i<end;i++){
