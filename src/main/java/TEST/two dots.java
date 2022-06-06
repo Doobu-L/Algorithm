@@ -1,5 +1,6 @@
 // 백준 two dots 랑 비슷하지만 변형문제. 이건 1,2,3,4 의 값이 있음.
 //    int answer = sol.solution4( new int[][] {{4, 2, 3,2}, {2,1,2,4}, {1,2,3,1}, {4,1,4,3}});
+// result = 7
 class Point {
     int x;
     int y;
