@@ -102,3 +102,18 @@ class Solution {
 }
 
 //정확성 12.5 효율성 0
+
+//문제 다시파악 - 1,2,3,5,8,13....  dp[i] = dp[i-1]+dp[i-2]
+class Solution {
+  public long solution(int n) {
+      int[] dp = new int[n];
+      dp[1] = 1;
+      dp[2] = 2;
+      for(int i=3; i<n; i++){
+          dp[i] = (dp[i-2] + dp[i-1]) % 1234567;
+      }
+      return dp[n];
+  }
+}
+
+
