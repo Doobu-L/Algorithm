@@ -113,3 +113,78 @@ public int[] solution2(String[] info, String[] query) {
 
     return right;
   }
+
+/*
+   최종 답안.
+   info[] - 1~10만건의 조건에 만건이상데이터에서 병렬처리가 유리했던 경험이 있어서 parallel() 사용.
+          - 병렬처리 후 정렬도 해야하는데, 동기화에 유리하도록 순서를 보장하는 forEachOrdered() 사용.
+          
+   위 의 실패 케이스에서 런타임오류 발생한 케이스는 단순했다. 
+   isEmpty() 초기화가 안된 컬렉션에서 함수를 호출하니 NullPointException이 났던 것 같다.
+   if(scores.isEmpty()) 를
+   if(scores == null ) 로 변경해줬고 , 런타임 오류 없이 잘 동작했다.
+   
+*/
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+class Solution {
+    public int[] solution(String[] info, String[] query) {
+    int[] answer = new int[query.length];
+    Map<String,List<Integer>> allCase = new HashMap<>();
+
+    Arrays.stream(info).parallel().forEachOrdered(s->makeCase(s.split(" "),"",0,allCase));
+    
+    allCase.keySet().stream().parallel().forEachOrdered(s -> allCase.get(s).sort(Integer::compareTo));  
+
+    for(int i=0;i<query.length;i++){
+      String[] condition = query[i].replaceAll(" and ","").split(" ");
+      List<Integer> scores = allCase.get(condition[0]);
+      if(scores==null){
+        answer[i] = 0;
+      }else{
+        answer[i] = binarySearch(scores,Integer.parseInt(condition[1]));
+      }
+    }
+
+    return answer;
+  }
+
+  void makeCase(String[] in,String text,int depth,Map<String,List<Integer>> allCase){
+    if(depth==4){
+      if(!allCase.containsKey(text)){
+        List<Integer> scores = new ArrayList<>();
+        scores.add(Integer.parseInt(in[depth]));
+        allCase.put(text,scores);
+      }else{
+        allCase.get(text).add(Integer.parseInt(in[depth]));
+      }
+      return;
+    }
+    makeCase(in,text+in[depth],depth+1,allCase);
+    makeCase(in,text+"-",depth+1,allCase);
+  }
+
+  int binarySearch(List<Integer> scores,int target){
+    int left=0;
+    int right=scores.size()-1;
+
+      if(scores.get(right)<target){
+      return 0;
+    }
+    
+    while(left<right){
+      int mid = (left+right)/2;
+      if(scores.get(mid)<target){
+        left = mid +1;
+      }else {
+        right = mid;
+      }
+    }
+
+    return scores.size() - left;
+  }
+}
