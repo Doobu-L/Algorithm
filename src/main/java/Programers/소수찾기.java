@@ -8,13 +8,13 @@ class Solution {
     String[] numberArr = numbers.split("");
 
     for(int i=0;i<numberArr.length;i++){
-      bfs(numberArr[i],numberArr,i,null);
+      dfs(numberArr[i],numberArr,i,null);
     }
 
     return primes.size();
   }
 
-  void bfs(String curNum,String[] numberArr,int idx,boolean[] visited){
+  void dfs(String curNum,String[] numberArr,int idx,boolean[] visited){
     if(curNum.length()>numberArr.length)return;
     if(!primes.contains(curNum)){
       if(isPrime(curNum)){
@@ -28,7 +28,7 @@ class Solution {
       }
       newVisited[idx]=true;
       if(!newVisited[i]){
-        bfs(curNum+numberArr[i],numberArr,i,newVisited);
+        dfs(curNum+numberArr[i],numberArr,i,newVisited);
       }
     }
   }
@@ -40,5 +40,41 @@ class Solution {
        if(num%i==0)return false;
     }
     return true;
+  }
+}
+
+
+
+class Solution {
+
+  static Set<Integer> primes = new HashSet<>();
+
+  public int solution(String numbers) {
+    reclusive("",numbers);
+    return primes.size();
+  }
+
+  boolean isPrime(String curNum) {
+    int num = Integer.parseInt(curNum);
+
+    if (primes.contains(curNum))
+      return true;
+    if (num < 2)
+      return false;
+    for (int i = 2; i <= Math.sqrt(num); i++) {
+      if (num % i == 0)
+        return false;
+    }
+    primes.add(num);
+    return true;
+  }
+
+  void reclusive(String cur, String others) {
+    if(!"".equals(cur))
+      isPrime(cur);
+
+    for (int i = 0; i < others.length(); i++) {
+      reclusive(cur + others.charAt(i), others.substring(0, i) + others.substring(i + 1));
+    }
   }
 }
