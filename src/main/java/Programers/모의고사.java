@@ -15,6 +15,12 @@ class Solution {
       if(answers[i] == pattern3[i%10])cnt[2]++;
     }
 
+    /*
+        아래 코드보다는
+        for(int s:cnt)
+          higtScore = Math.max(higtScore,s);
+        가 나아보인다.
+    */
     for(int s:cnt)
       if(higtScore<s)
         higtScore=s;
