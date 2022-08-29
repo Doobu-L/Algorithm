@@ -84,7 +84,7 @@ class PriceInfo{
     this.pricePerOne = price/cnt;
   }
 }
-
+//ㅎㅎ오늘은 기분이 좋으니 구라커밋하나만...>.<
 
 
 
