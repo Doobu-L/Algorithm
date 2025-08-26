@@ -1,25 +1,21 @@
 package Programers.kotlyn
 
 class 숫자짝궁 {
-    //solution1 - 정합성 성공, 효율성 실패
-    fun solution1(X: String, Y: String): String {
-        var Y1: StringBuilder = StringBuilder(Y)
+    fun solution(X: String, Y: String): String {
+        var sb = StringBuilder();
 
-        val result = X.map { it: Char ->
-            var pos = Y1.indexOf(it)
+        for(num in 9 downTo 0){
+            var cnt = minOf( X.count { it == ('0'+num) }, Y.count { it == ('0'+num) })
 
-            if (Y1.contains(it)) {
-                Y1.deleteCharAt(pos)
-                it.toString()
-            } else {
-                ""
+            repeat(cnt){
+                sb.append(num)
             }
-        }.sortedDescending().joinToString("")
+        }
 
-        return when{
-            result.startsWith("0") -> "0"
-            result.isEmpty() -> "-1"
-            else -> result
+        return when {
+            sb.isEmpty() -> "-1"
+            sb.startsWith("0") -> "0"
+            else -> sb.toString()
         }
     }
 }
